@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "176081394083",
+    "project_id": "firstproject-65214",
+    "storage_bucket": "firstproject-65214.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176081394083:android:cdb0b36a980ba72973a216",
+        "android_client_info": {
+          "package_name": "com.example.kirmizidefter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176081394083-jota3vqc1cukp1d9kefqtv9ivk2bla4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtibF5EeBzgG_a9ETfW-czWUB_LsDPfYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176081394083-jota3vqc1cukp1d9kefqtv9ivk2bla4k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "176081394083-olgc3jmdl13b0i51jheof563nshrc22q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.kirmizidefter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
