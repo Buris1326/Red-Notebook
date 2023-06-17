@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kirmizidefter/gecisEkranlari/sayfaBursa.dart';
 
-class SignupScreen extends StatefulWidget {
-  @override
-  _SignupScreenState createState() => _SignupScreenState();
-}
+class SignupScreen extends StatelessWidget {
 
-class _SignupScreenState extends State<SignupScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  String user_name = "";
+  String user_email = "";
+  String user_password = "";
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +36,7 @@ class _SignupScreenState extends State<SignupScreen> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
-                key: _formKey,
+
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -50,8 +46,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         Icons.arrow_back,
                         color: Colors.grey[600],
                       ),
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                     ),
                     const SizedBox(height: 16.0),
                     const Icon(
@@ -61,7 +56,27 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
-                      controller: _emailController,
+                      onChanged: (value) {
+                        user_name = value;
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'İsim',
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'İsim alanı boş bırakılamaz';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      onChanged: (value) {
+                        user_email = value;
+                      },
                       decoration: InputDecoration(
                         labelText: 'E-posta',
                         prefixIcon: Icon(
@@ -78,7 +93,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
-                      controller: _passwordController,
+                      onChanged: (value) {
+                        user_password = value;
+                      },
                       decoration: InputDecoration(
                         labelText: 'Şifre',
                         prefixIcon: Icon(
@@ -97,9 +114,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     const SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _signup();
-                        }
+
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
@@ -125,19 +140,5 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> _signup() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text);
-      // Kayıt işlemi başarılı oldu
-      // Diğer işlemleri burada gerçekleştirebilirsiniz, örneğin kullanıcı verilerini Firebase veritabanına kaydetmek
-    } catch (e) {
-      // Kayıt işlemi başarısız oldu
-      // Hata mesajını kullanıcıya gösterebilirsiniz
-      print(e.toString());
-    }
   }
 }

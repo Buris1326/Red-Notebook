@@ -1,11 +1,12 @@
-
-
-/*
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-*/
-/*class FlutterFireAuthService {
+
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:kirmizidefter/gecisEkranlari/sayfaBursa.dart';
+import 'package:kirmizidefter/yardimciSayfalar/sayfaYildirim.dart';
+
+class FlutterFireAuthService {
   final FirebaseAuth _firebaseAuth;
 
   FlutterFireAuthService(this._firebaseAuth);
@@ -18,7 +19,7 @@ import 'package:flutter/material.dart';
 
     try {
       User? user = (await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password))
+              email: email, password: password))
           .user;
 
       if (user != null) {
@@ -42,28 +43,31 @@ import 'package:flutter/material.dart';
   }
 
   Future<User?> logIn(
-      String email, String password, BuildContext context) async {
+    String email,
+    String password,
+    BuildContext context,
+  ) async {
     try {
       User? user = (await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password))
+        email: email,
+        password: password,
+      ))
           .user;
 
       if (user != null) {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) {
-              return SeoTalepScreen();
-            },
+            builder: (context) => SayfaYildirim(child: Container()),
           ),
         );
         return user;
       } else {
-        showAlert("Error!", "Login Failed", context);
+        print("object");
         return user;
       }
     } catch (e) {
-      showAlert("Error!", e.toString(), context);
+      print("object");
       return null;
     }
   }
@@ -72,16 +76,13 @@ import 'package:flutter/material.dart';
     try {
       await _firebaseAuth.signOut().then((value) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (_) => LoginScreen()));
+            context, MaterialPageRoute(builder: (_) => SayfaBursa()));
       });
-      showAlert("Good Bye", "Have a nice day!", context);
-    } catch (e) {
-    }
+      print("object");
+    } catch (e) {}
   }
 
   Future<dynamic> controlAuth() async {
-    _firebaseAuth.authStateChanges().listen((User? user) {
-    });
+    _firebaseAuth.authStateChanges().listen((User? user) {});
   }
 }
-*/

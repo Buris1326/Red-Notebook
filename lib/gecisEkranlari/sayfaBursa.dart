@@ -1,48 +1,21 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:kirmizidefter/Authentication.dart';
 import 'package:lottie/lottie.dart';
 import 'package:kirmizidefter/kayitOl_sifreYenileme/ForgotPassword.dart';
 import 'package:kirmizidefter/kayitOl_sifreYenileme/SignUpScreen.dart';
-import 'package:kirmizidefter/yardimciSayfalar/sayfaYildirim.dart';
 
-class SayfaBursa extends StatefulWidget {
-  @override
-  _SayfaBursaState createState() => _SayfaBursaState();
-}
+class SayfaBursa extends StatelessWidget {
+  String user_email = "";
+  String user_password = "";
 
-class _SayfaBursaState extends State<SayfaBursa> {
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
 
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
-  void _login() async {
-    try {
-      UserCredential userCredential =
-      await _firebaseAuth.signInWithEmailAndPassword(
-        email: _usernameController.text,
-        password: _passwordController.text,
-      );
-
-      // Giriş başarılı olduğunda yapılması gereken işlemler
-      User? user = userCredential.user;
-      if (user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => SayfaYildirim(child: Container())),
-        );
-      }
-    } catch (e) {
-      // Giriş hatalı olduğunda yapılması gereken işlemler
-      print("hatali bilgi girisi yapildi");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Color(0xFF1F1F1F), // Koyu arka plan rengi
+        backgroundColor: Color(0xFF1F1F1F),
         body: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -68,7 +41,9 @@ class _SayfaBursaState extends State<SayfaBursa> {
                   ),
                   SizedBox(height: 40),
                   TextFormField(
-                    controller: _usernameController,
+                    onChanged: (value) {
+                      user_email = value;
+                    },
                     decoration: InputDecoration(
                       hintText: "Kullanıcı Adınızı Giriniz",
                       hintStyle: TextStyle(color: Colors.grey),
@@ -83,7 +58,9 @@ class _SayfaBursaState extends State<SayfaBursa> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
-                    controller: _passwordController,
+                    onChanged: (value) {
+                      user_password = value;
+                    },
                     decoration: InputDecoration(
                       hintText: "Şifrenizi Giriniz",
                       hintStyle: TextStyle(color: Colors.grey),
@@ -104,7 +81,9 @@ class _SayfaBursaState extends State<SayfaBursa> {
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => ForgotPassword()),
+                            MaterialPageRoute(
+                              builder: (context) => ForgotPassword(),
+                            ),
                           );
                         },
                         child: Text(
@@ -119,7 +98,9 @@ class _SayfaBursaState extends State<SayfaBursa> {
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => SignupScreen()),
+                            MaterialPageRoute(
+                              builder: (context) => SignupScreen(),
+                            ),
                           );
                         },
                         child: Text(
@@ -143,16 +124,28 @@ class _SayfaBursaState extends State<SayfaBursa> {
                         end: Alignment.centerRight,
                       ),
                     ),
-                    child: TextButton(
-                      onPressed: () {
-                        _login(); // Giriş yapma fonksiyonu
-                      },
-                      child: Text(
-                        'Giriş Yap',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(29),
+                      child: TextButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.tealAccent),
+                          shape:
+                          MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(29.0),
+                              side: BorderSide(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          FlutterFireAuthService authService = FlutterFireAuthService(FirebaseAuth.instance);
+                          authService.logIn(user_email, user_password, context);
+
+                        },
+                        child: Text(
+                          "Bişe Bişe",
+                          style: TextStyle(color: Colors.green),
                         ),
                       ),
                     ),
